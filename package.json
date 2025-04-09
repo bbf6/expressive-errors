@@ -1,0 +1,23 @@
+{
+  "name": "expressive-errors",
+  "version": "1.0.0",
+  "description": "expressive-errors lets your errors to manage the workflow, http response and logs.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bbf6/expressive-errors.git"
+  },
+  "keywords": [
+    "express",
+    "error"
+  ],
+  "author": "a_leminiscata",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bbf6/expressive-errors/issues"
+  },
+  "homepage": "https://github.com/bbf6/expressive-errors#readme"
+}
