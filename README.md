@@ -120,46 +120,46 @@ const getBookById = async (req, res) => {
 
 All of this are functions to generate a new error instance. You can pass as argument a message and an express response, or you can pass them latter.
 
-`BadRequestError(message, response)`
-`UnauthorizedError(message, response)`
-`PaymentRequiredError(message, response)`
-`ForbiddenError(message, response)`
-`NotFoundError(message, response)`
-`MethodNotAllowedError(message, response)`
-`NotAcceptableError(message, response)`
-`ProxyAuthenticationRequiredError(message, response)`
-`RequestTimeoutError(message, response)`
-`ConflictError(message, response)`
-`GoneError(message, response)`
-`LengthRequiredError(message, response)`
-`PreconditionFailedError(message, response)`
-`PayloadTooLargeError(message, response)`
-`URITooLongError(message, response)`
-`UnsupportedMediaTypeError(message, response)`
-`RangeNotSatisfiableError(message, response)`
-`ExpectationFailedError(message, response)`
-`ImATeapotError(message, response)`
-`MisdirectedRequestError(message, response)`
-`UnprocessableContentError(message, response)`
-`LockedError(message, response)`
-`FailedDependencyError(message, response)`
-`TooEarlyError(message, response)`
-`UpgradeRequiredError(message, response)`
-`PreconditionRequiredError(message, response)`
-`TooManyRequestsError(message, response)`
-`RequestHeaderFieldsTooLargeError(message, response)`
-`UnavailableForLegalReasonsError(message, response)`
-`InternalServerError(message, response)`
-`NotImplementedError(message, response)`
-`BadGatewayError(message, response)`
-`ServiceUnavailableError(message, response)`
-`GatewayTimeoutError(message, response)`
-`HTTPVersionNotSupportedError(message, response)`
-`VariantAlsoNegotiatesError(message, response)`
-`InsufficientStorageError(message, response)`
-`LoopDetectedError(message, response)`
-`NotExtendedError(message, response)`
-`NetworkAuthenticationRequiredError(message, response)`
+- `BadRequestError(message, response)`
+- `UnauthorizedError(message, response)`
+- `PaymentRequiredError(message, response)`
+- `ForbiddenError(message, response)`
+- `NotFoundError(message, response)`
+- `MethodNotAllowedError(message, response)`
+- `NotAcceptableError(message, response)`
+- `ProxyAuthenticationRequiredError(message, response)`
+- `RequestTimeoutError(message, response)`
+- `ConflictError(message, response)`
+- `GoneError(message, response)`
+- `LengthRequiredError(message, response)`
+- `PreconditionFailedError(message, response)`
+- `PayloadTooLargeError(message, response)`
+- `URITooLongError(message, response)`
+- `UnsupportedMediaTypeError(message, response)`
+- `RangeNotSatisfiableError(message, response)`
+- `ExpectationFailedError(message, response)`
+- `ImATeapotError(message, response)`
+- `MisdirectedRequestError(message, response)`
+- `UnprocessableContentError(message, response)`
+- `LockedError(message, response)`
+- `FailedDependencyError(message, response)`
+- `TooEarlyError(message, response)`
+- `UpgradeRequiredError(message, response)`
+- `PreconditionRequiredError(message, response)`
+- `TooManyRequestsError(message, response)`
+- `RequestHeaderFieldsTooLargeError(message, response)`
+- `UnavailableForLegalReasonsError(message, response)`
+- `InternalServerError(message, response)`
+- `NotImplementedError(message, response)`
+- `BadGatewayError(message, response)`
+- `ServiceUnavailableError(message, response)`
+- `GatewayTimeoutError(message, response)`
+- `HTTPVersionNotSupportedError(message, response)`
+- `VariantAlsoNegotiatesError(message, response)`
+- `InsufficientStorageError(message, response)`
+- `LoopDetectedError(message, response)`
+- `NotExtendedError(message, response)`
+- `NetworkAuthenticationRequiredError(message, response)`
 
 If you want to create an error on your own you can use the `createError(status, message, response)` function.
 
