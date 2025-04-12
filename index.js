@@ -11,10 +11,9 @@ const createError = (status = 500, message = '', response) => {
     message,
     isExpressive: true,
     toString: function () {
-      const stringMessage = isString(this.message)
-        ? this.message
-        : JSON.stringify(this.message)
-      return `Error ${this.status}: ${stringMessage}`
+      if (isString(this.message)) return `Error ${this.status}: ${this.message}`
+      if (message instanceof Error) return message
+      return `Error ${this.status}: ${JSON.stringify(this.message)}`
     },
     console: function (print = console.error, params = []) {
       print(this.toString(), ...params)
