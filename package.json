@@ -1,6 +1,6 @@
 {
   "name": "expressive-errors",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "expressive-errors lets your errors to manage the workflow, http response and logs.",
   "main": "index.js",
   "type": "module",

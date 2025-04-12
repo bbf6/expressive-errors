@@ -25,6 +25,7 @@ const getBookById = async (req, res) => {
 }
 
 ```
+
 With `expressive-errors` you can let the error to do the work for you:
 ```javascript
 import { NotFoundError, InternalServerError } from 'expressive-errors'
@@ -48,6 +49,7 @@ const getBookById = async (req, res) => {
 }
 ```
 
+
 ```javascript
 const getBookById = async (req, res) => {
   try {
@@ -67,6 +69,7 @@ const getBookById = async (req, res) => {
   }
 }
 ```
+
 
 ```javascript
 const getBookById = async (req, res) => {
@@ -95,23 +98,21 @@ const getBookById = async (req, res) => {
 
 
 ```javascript
-import { NotFoundError, InternalServerError } from 'expressive-errors'
+import { NotFoundError, guaranteedExpressive } from 'expressive-errors'
 
 // Move the error obejct outside to simplify reading
-const ERROR = NotFoundError({ error: 'Book not found' })
+const NOT_FOUND_ERROR = NotFoundError({ error: 'Book not found' })
 
 const getBookById = async (req, res) => {
   try {
     const { id } = req.params
     const book = await service.getById(id)
-    ERROR
-      .throwUnless(book)
-      .throwIf(book.author === 'Paulo Cohelo')
+    NOT_FOUND_ERROR.throwUnless(book)
     res.send(book)
   }
   catch (error) {
-    const expressiveError = error.isExpressive ? error : InternalServerError({ error })
-    expressiveError.send(res).console()
+    // Guaranteed the error is expressive and then, send and log itself.
+    guaranteedExpressive(error).send(res).console()
   }
 }
 ```
@@ -119,34 +120,63 @@ const getBookById = async (req, res) => {
 
 All of this are functions to generate a new error instance. You can pass as argument a message and an express response, or you can pass them latter.
 
-`BadRequestError()`,
-`UnauthorizedError()`,
-`ForbiddenError()`,
-`NotFoundError()`,
-`MethodNotAllowedError()`,
-`ImATeapotError()`,
-`ConflictError()`,
-`UnprocessableEntityError()`,
-`TooManyRequestsError()`,
-`InternalServerError()`,
-`NotImplementedError()`,
-`BadGatewayError()`,
-`ServiceUnavailableError()`,
-`GatewayTimeoutError()`,
+`BadRequestError(message, response)`
+`UnauthorizedError(message, response)`
+`PaymentRequiredError(message, response)`
+`ForbiddenError(message, response)`
+`NotFoundError(message, response)`
+`MethodNotAllowedError(message, response)`
+`NotAcceptableError(message, response)`
+`ProxyAuthenticationRequiredError(message, response)`
+`RequestTimeoutError(message, response)`
+`ConflictError(message, response)`
+`GoneError(message, response)`
+`LengthRequiredError(message, response)`
+`PreconditionFailedError(message, response)`
+`PayloadTooLargeError(message, response)`
+`URITooLongError(message, response)`
+`UnsupportedMediaTypeError(message, response)`
+`RangeNotSatisfiableError(message, response)`
+`ExpectationFailedError(message, response)`
+`ImATeapotError(message, response)`
+`MisdirectedRequestError(message, response)`
+`UnprocessableContentError(message, response)`
+`LockedError(message, response)`
+`FailedDependencyError(message, response)`
+`TooEarlyError(message, response)`
+`UpgradeRequiredError(message, response)`
+`PreconditionRequiredError(message, response)`
+`TooManyRequestsError(message, response)`
+`RequestHeaderFieldsTooLargeError(message, response)`
+`UnavailableForLegalReasonsError(message, response)`
+`InternalServerError(message, response)`
+`NotImplementedError(message, response)`
+`BadGatewayError(message, response)`
+`ServiceUnavailableError(message, response)`
+`GatewayTimeoutError(message, response)`
+`HTTPVersionNotSupportedError(message, response)`
+`VariantAlsoNegotiatesError(message, response)`
+`InsufficientStorageError(message, response)`
+`LoopDetectedError(message, response)`
+`NotExtendedError(message, response)`
+`NetworkAuthenticationRequiredError(message, response)`
 
+If you want to create an error on your own you can use the `createError(status, message, response)` function.
 
-If you want to create an error on your own you can use the `createError()` function which accepts an status code, a message and an express response.
+Also if you are not sure the error you are catching is expressive you can evaluate the property `isExpressive` or you can use the `guaranteedExpressive(error)` function to get an `InternalErrorServer(error)` if the error was not an expressive error yet.
 
 ### Methods
 
 - `status`: Has the HTTP status error code of the error. It is initialized by default depending of the method you use to create it.
 - `message`: It's the payload of the error, usually an object or a string.
 - `isExpressive`: Is a constant you can use to verify if an object is an expressive error.
-- `toString`: Returns a string representation of the error.
-- `console`: Print the error in the console, but you can pass any log function of your choice instead.
-- `send`: Uses the express response (a.k.a. `res`) object to send itself. You can initialize the error object with the express response or you can wait to pass it as an argument to this function.
-- `throw`: Throws itself as an error. Beware to use this inside a `try/catch` block.
-- `throwIf`: Pass a boolean expression as an argument to choose if when to throw the exception. This is a monad function so you can chain as many `throwIf` as you want.
-- `throwUnless`: Works like `throwIf` but the boolean is evaluated as its opposite.
+- `toString()`: Returns a string representation of the error.
+- `console(print, ...params)`: Print the error with `console.error` by default, but you can pass any log function of your choice instead. If your print functions needs other param than the message, just add it to the final.
+- `send(response, message)`: Uses the express response (a.k.a. `res`) object to send itself. You can initialize the error object with the express response or you can wait to pass it as an argument to this function. Also you can pass the message in case you haven't initialized your error with it.
+- `sendIf(conditon, response, message)`: Same as `send()` but you can add a boolean expression which needs to be true to send the response.
+- `sendUnless(condition, response, message)`: Same as `sendIf()` but the condition must be false to send the response.
+- `throw()`: Throws itself as an error. Beware to use this inside a `try/catch` block.
+- `throwIf(condition)`: Pass a boolean expression as an argument to choose if when to throw the exception. This is a monad function so you can chain as many `throwIf()` as you want.
+- `throwUnless(condition)`: Works like `throwIf()` but the boolean is evaluated as its opposite.
 
-The `console`, `send`, `throwIf` and `throwUnless` functions are monads so you can chain them as you want.
+The `console()`, `send()`, `sendIf()`, `sendUnless()`, `throwIf()` and `throwUnless()` functions are monads so you can chain them as you want.
